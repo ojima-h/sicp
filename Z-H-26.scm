@@ -353,11 +353,24 @@
 (driver-loop)
 
 
-
-
 ;; ex 4.14
 
 ; system version の map に compound-procedure や リストを渡した時に、
 ; meta-circulator 上の実装を、system 側で処理できないため
 ; (system 側では 単なるリストとして見える)
 ; かな？
+
+;; ex 4.15
+
+(try try)
+=>  (if (halts? try try)
+	(run-forever)
+	'halted)
+=>
+| (halts? try try) = true  -> (run-forever) = 停止しない
+| (halts? try try) = fasls -> 'halted       = 停止する
+
+=>
+   (halts? try try) が true  なのに (try try) は停止しない
+or (halts? try try) が false なのに (try try) は停止する
+
