@@ -12,7 +12,7 @@
   (traverse-environment var env
 			(lambda (vals) (pop! vals))
 			(lambda (frame)
-			  (unset-variable-value! var val (enclosing-environment env))))) ; do nothing
+			  (unset-variable-value! var (enclosing-environment env))))) 
 
 
 (put 'eval 'make-unbound! eval-unbinding)

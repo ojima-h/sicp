@@ -46,4 +46,7 @@
 
   (define-variable! 'd 12 sample-env)
   (display sample-env) (newline)
+
+  (unset-variable-value! 'q sample-env)
+
 )

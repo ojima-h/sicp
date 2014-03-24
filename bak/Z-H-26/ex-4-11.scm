@@ -1,11 +1,11 @@
 (let ()
-  (define (make-frame bindings) (list bindings))
-  (define (frame-bindigns frame) (car bindings))
+  (define (make-frame vars vals) (list (map cons vars vals)))
+  (define (frame-bindigns frame) (car frame))
   (define (add-binding-to-frame! var val frame)
     (set-car! frame (cons (cons var val) frame)))
 
-  (define (extend-environment bindings base-env)
-    (cons (make-frame bindings) base-env))
+  (define (extend-environment vars vals base-env)
+    (cons (make-frame vars vals) base-env))
 
   (define (lookup-variable-value var env)
     (define (env-loop env)
@@ -35,4 +35,12 @@
 	  (add-binding-to-frame! var val frame))))
 
 
+
+(define (setup-environment)
+  (let ((initial-env
+         (extend-environment (map cons primitive-procedure-names primitive-procedure-objects)
+                             the-empty-environment)))
+    (define-variable! 'true  #t initial-env)
+    (define-variable! 'false #f initial-env)
+    initial-env))
 )

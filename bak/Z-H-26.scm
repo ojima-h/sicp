@@ -298,7 +298,7 @@
          (extend-environment (primitive-procedure-names)
                              (primitive-procedure-objects)
                              the-empty-environment)))
-    (define-variable! 'true #t initial-env)
+    (define-variable! 'true  #t initial-env)
     (define-variable! 'false #f initial-env)
     initial-env))
 
@@ -312,6 +312,13 @@
         (list 'cdr cdr)
         (list 'cons cons)
         (list 'null? null?)
+        (list 'display display)
+
+	(list 'map (....))
+
+	(list '= =)
+	(list '+ +)
+	(list '- -)
         ;<more primitives>
         ))
 (define (primitive-procedure-names)
