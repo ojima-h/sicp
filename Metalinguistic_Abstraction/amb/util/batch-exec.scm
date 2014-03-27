@@ -5,6 +5,7 @@
 	  'exit
 	  (let ((e (car rest)))
 	    (set! rest (cdr rest))
+	    (newline) (display "<<< ") (display e)
 	    e)))))
 
 (define (batch-exec terms)

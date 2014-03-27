@@ -26,5 +26,3 @@
 	 (list a b)))
      (even-sum-pair '(1 3 5 8) '(20 35 110))
      try-again)))
-
-(define (main argv) (sample))
