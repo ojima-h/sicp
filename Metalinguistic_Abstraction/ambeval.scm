@@ -215,12 +215,15 @@
 
 ;;;amb expressions
 
+(define backtrack-count 0)
 (define (analyze-amb exp)
   (let ((cprocs (map analyze (amb-choices exp))))
     (lambda (env succeed fail)
       (define (try-next choices)
         (if (null? choices)
-            (fail)
+            (begin
+	      (set! backtrack-count (+ backtrack-count 1))
+	      (fail))
             ((car choices) env
                            succeed
                            (lambda ()
