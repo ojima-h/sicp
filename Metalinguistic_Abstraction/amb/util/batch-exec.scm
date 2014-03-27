@@ -15,7 +15,11 @@
 	    (newline) (display "<<< ") (display e)
 	    e)))))
 
-(define (batch-exec terms)
-  (driver-loop (extend-read-func-with-list read-func-terminal terms)))
-(define (exec-and-loop terms)
-  (driver-loop (extend-read-func-with-list read-func-interactive terms)))
+(define-syntax batch-exec
+  (syntax-rules ()
+    ((_ terms ...)
+     (driver-loop (extend-read-func-with-list read-func-terminal '(terms ...))))))
+(define-syntax exec-and-loop
+  (syntax-rules ()
+    ((_ terms ...)
+     (driver-loop (extend-read-func-with-list read-func-interactive '(terms ...))))))
