@@ -22,6 +22,12 @@
        (kons (car lst) (fold kons knil (cdr lst)))))
  (define (every pred lst)
    (fold (lambda (x result) (and (pred x) result)) true lst))
+ (define (find pred lst)
+   (if (null? lst)
+       '()
+       (if (pred (car lst))
+	   (car lst)
+	   (find pred (cdr lst)))))
  
  (define (an-integer-starting-from n)
    (amb n (an-integer-starting-from (+ n 1))))
