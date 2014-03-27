@@ -18,7 +18,7 @@
 ;; try-againn
 
 (define (sample)
-  (batch-exec
+  (exec-and-loop
    '((define (even-sum-pair list1 list2)
        (let ((a (an-element-of list1))
 	     (b (an-element-of list2)))

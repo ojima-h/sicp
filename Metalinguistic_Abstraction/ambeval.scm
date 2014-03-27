@@ -212,11 +212,11 @@
 (define input-prompt ";;; Amb-Eval input:")
 (define output-prompt ";;; Amb-Eval value:")
 
-(define (interactive-read)
+(define (read-func-interactive)
   (prompt-for-input input-prompt)
   (read))
 
-(define (driver-loop :optional (read-func interactive-read))
+(define (driver-loop :optional (read-func read-func-interactive))
   (define (internal-loop try-again)
     (let ((input (read-func)))
       (cond ((eq? input 'exit) 'done)
