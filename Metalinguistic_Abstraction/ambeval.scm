@@ -45,6 +45,7 @@
         ((assignment? exp) (analyze-assignment exp))
         ((definition? exp) (analyze-definition exp))
         ((if? exp) (analyze-if exp))
+	((and? exp) (analyze-and exp))
         ((lambda? exp) (analyze-lambda exp))
         ((begin? exp) (analyze-sequence (begin-actions exp)))
         ((cond? exp) (analyze (cond->if exp)))
@@ -192,6 +193,25 @@
          (error
           "Unknown procedure type -- EXECUTE-APPLICATION"
           proc))))
+
+;;;additional syntax
+
+(define (and? exp) (tagged-list? exp 'and))
+(define (analyze-and exp)
+  (define (and-operands exp) (cdr exp))
+
+  (define (and->if conditions)
+    (if (null? conditions)
+	'true
+	(list
+	 (make-lambda '(left-value)
+		      (list
+		       (make-if 'left-value
+				(and->if (cdr conditions))
+				'left-value)))
+	 (car conditions))))
+  (analyze (and->if (and-operands exp))))
+
 
 ;;;amb expressions
 

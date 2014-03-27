@@ -145,7 +145,6 @@
 (define (make-if predicate consequent alternative)
   (list 'if predicate consequent alternative))
 
-
 (define (begin? exp) (tagged-list? exp 'begin))
 
 (define (begin-actions exp) (cdr exp))

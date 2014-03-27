@@ -11,6 +11,18 @@
  (define (an-element-of items)
    (require (not (null? items)))
    (amb (car items) (an-element-of (cdr items))))
+
+ (define (map proc lst)
+   (if (null? lst)
+       '()
+       (cons (proc (car lst)) (map (cdr lst)))))
+ (define (fold kons knil lst)
+   (if (null? lst)
+       knil
+       (kons (car lst) (fold kons knil (cdr lst)))))
+ (define (every pred lst)
+   (fold (lambda (x result) (and (pred x) result)) true lst))
+ 
  (define (an-integer-starting-from n)
    (amb n (an-integer-starting-from (+ n 1))))
  (define (an-integer-between from to)
