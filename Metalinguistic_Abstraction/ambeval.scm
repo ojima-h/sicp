@@ -26,7 +26,7 @@
 ;;**implementation-dependent loading of evaluator file
 ;;Note: It is loaded first so that the section 4.2 definition
 ;; of eval overrides the definition from 4.1.1
-(load "./mceval.scm")
+(load "mceval.scm")
 
 
 
@@ -212,33 +212,33 @@
 (define input-prompt ";;; Amb-Eval input:")
 (define output-prompt ";;; Amb-Eval value:")
 
-(define (driver-loop)
+(define (driver-loop :optional (read-func read))
   (define (internal-loop try-again)
     (prompt-for-input input-prompt)
-    (let ((input (read)))
-      (if (eq? input 'try-again)
-          (try-again)
-          (begin
-            (newline)
-            (display ";;; Starting a new problem ")
-            (ambeval input
-                     the-global-environment
-                     ;; ambeval success
-                     (lambda (val next-alternative)
-                       (announce-output output-prompt)
-                       (user-print val)
-                       (internal-loop next-alternative))
-                     ;; ambeval failure
-                     (lambda ()
-                       (announce-output
-                        ";;; There are no more values of")
-                       (user-print input)
-                       (driver-loop)))))))
+    (let ((input (read-func)))
+      (cond ((eq? input 'exit) 'done)
+	    ((eq? input 'try-again) (try-again))
+	    (else
+	     (newline)
+	     (display ";;; Starting a new problem ")
+	     (ambeval input
+		      the-global-environment
+		      ;; ambeval success
+		      (lambda (val next-alternative)
+			(announce-output output-prompt)
+			(user-print val)
+			(internal-loop next-alternative))
+		      ;; ambeval failure
+		      (lambda ()
+			(announce-output
+			 ";;; There are no more values of")
+			(user-print input)
+			(driver-loop read-func)))))))
   (internal-loop
    (lambda ()
      (newline)
      (display ";;; There is no current problem")
-     (driver-loop))))
+     (driver-loop read-func))))
 
 
 
