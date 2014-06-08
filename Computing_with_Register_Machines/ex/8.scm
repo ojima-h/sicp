@@ -1,4 +1,4 @@
-(load "sample/ch5-regsim.scm")
+(load "ch5-regsim.scm")
 
 ;; SAMPLE
 (define gcd-machine
